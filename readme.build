@@ -1,0 +1,2 @@
+required old: apt-get install swig libpython-dev python-dev
+required new: apt-get install swig libpython3-dev python3-dev

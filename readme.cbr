@@ -1,0 +1,14 @@
+# u-boot: u-boot-mainline-cb
+#export ARCH=arm
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading.diff
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors.diff
+make chromebook_jerry_defconfig
+make
+
+mkimage -f /compile/doc/u-boot-mainline-cb/misc.cbr/chromebook_mighty.its /compile/result/u-boot-mainline-cb/cbr/uboot.img.cbr
+
+cd /compile/result/u-boot-mainline-cb/cbr
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader 
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbr --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbr
+rm -f /tmp/config /tmp/dummy-bootloader

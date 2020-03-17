@@ -1,0 +1,9 @@
+diff --git a/configs/snow_defconfig b/configs/snow_defconfig
+index fa5174b4a1..0d98d1fba6 100644
+--- a/configs/snow_defconfig
++++ b/configs/snow_defconfig
+@@ -94,3 +94,4 @@ CONFIG_VIDEO_BRIDGE_NXP_PTN3460=y
+ CONFIG_LCD=y
+ CONFIG_TPM=y
+ CONFIG_ERRNO_STR=y
++CONFIG_ARM_CORTEX_A15_CVE_2017_5715=y

@@ -1,0 +1,14 @@
+# u-boot: u-boot-mainline-cb
+#export ARCH=arm
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/spectre-mitigation.diff
+make snow_config
+make
+
+# 0x43E00000 for snow - 0x23E00000 for peach-pi
+mkimage -A arm -O linux -T kernel -C none -e 0x43E00000 -a 0x43E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe
+
+cd /compile/result/u-boot-mainline-cb/cbe
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader 
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe
+rm -f /tmp/config /tmp/dummy-bootloader

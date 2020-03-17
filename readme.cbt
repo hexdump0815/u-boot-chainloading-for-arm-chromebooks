@@ -1,0 +1,13 @@
+# u-boot: u-boot-mainline-cb
+#export ARCH=arm
+patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/chainloading-and-spectre-mitigation.diff
+make nyan-big_defconfig
+make u-boot.bin u-boot.dtb
+
+mkimage -f /compile/doc/u-boot-mainline-cb/misc.cbt/nyan-big.its /compile/result/u-boot-mainline-cb/cbt/uboot.img.cbt
+
+cd /compile/result/u-boot-mainline-cb/cbt
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader 
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbt --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbt
+rm -f /tmp/config /tmp/dummy-bootloader
