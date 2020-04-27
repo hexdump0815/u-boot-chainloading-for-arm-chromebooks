@@ -1,3 +1,20 @@
+# u-boot its padding from https://github.com/reey/PKGBUILDs - alarm/uboot-nyan-big/uboot.patch
+# looks like this padding and the other fix othe the above patch are already in v2020.01
+# v2020.01 version somehow did not work, so lets try to exactly rebuild the reey version:
+# u-boot v2018.11, u-boot.patch from reey - works :)
+# add lpae-and-spectre-mitigation.diff and it works with 4gb :)
+# to be retried: why it did not work with v2020.01? will it maybe work with v2020.04?
+#
+# from: https://archlinuxarm.org/forum/viewtopic.php?f=49&t=12185&start=90#p60232
+# in u-boot I would recommend to execute "setenv stdin cros-ec-keyb" and "saveenv" so we no
+# longer get the inputs from the serial console. Otherwise autoboot would later on not work
+# since it is always interrupted by serial.
+#
+# interesting too maybe: https://archlinuxarm.org/forum/viewtopic.php?f=49&t=12185&start=100#p60273
+#
+# looks like the sprectre mitigation does not work with chainloaded u-boot (not low level enough any more?)
+# CPU1: Spectre v2: firmware did not set auxiliary control register IBE bit, system vulnerable
+
 # u-boot: u-boot-mainline-cb
 #export ARCH=arm
 patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/chainloading-and-spectre-mitigation.diff

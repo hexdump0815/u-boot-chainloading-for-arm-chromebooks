@@ -1,3 +1,7 @@
+# this from cbt might affect cbe too ...
+# looks like the sprectre mitigation does not work with chainloaded u-boot (not low level enough any more?)
+# CPU1: Spectre v2: firmware did not set auxiliary control register IBE bit, system vulnerable
+
 # u-boot: u-boot-mainline-cb
 #export ARCH=arm
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/spectre-mitigation.diff

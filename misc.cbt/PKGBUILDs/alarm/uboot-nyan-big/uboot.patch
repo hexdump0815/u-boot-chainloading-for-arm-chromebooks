@@ -1,0 +1,24 @@
+diff -ura u-boot-2018.11/arch/arm/dts/tegra124-nyan-big-u-boot.dtsi u-boot-2018.11.new/arch/arm/dts/tegra124-nyan-big-u-boot.dtsi
+--- u-boot-2018.11/arch/arm/dts/tegra124-nyan-big-u-boot.dtsi	2018-11-14 16:10:06.000000000 +0000
++++ u-boot-2018.11.new/arch/arm/dts/tegra124-nyan-big-u-boot.dtsi	2019-01-16 22:53:53.863913776 +0000
+@@ -15,7 +15,7 @@
+ 	};
+ 
+ 	spi@7000d400 {
+-		spi-deactivate-delay = <200>;
++		spi-deactivate-delay = <500>;
+ 		spi-max-frequency = <3000000>;
+ 
+ 		cros_ec: cros-ec@0 {
+diff -ura u-boot-2018.11/doc/chromium/nyan-big.its u-boot-2018.11.new/doc/chromium/nyan-big.its
+--- u-boot-2018.11/doc/chromium/nyan-big.its	2018-11-14 16:10:06.000000000 +0000
++++ u-boot-2018.11.new/doc/chromium/nyan-big.its	2019-01-16 22:54:24.073828330 +0000
+@@ -6,7 +6,7 @@
+ 
+ 	images {
+ 		kernel {
+-			description = "U-Boot mainline";
++			description = "U-Boot mainline    ";
+ 			type = "kernel_noload";
+ 			arch = "arm";
+ 			os = "linux";

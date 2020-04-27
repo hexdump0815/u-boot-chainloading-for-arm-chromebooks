@@ -1,0 +1,50 @@
+flash_uboot() {
+  major=$(mountpoint -d / | cut -f 1 -d ':')
+  minor=$(mountpoint -d / | cut -f 2 -d ':')
+  device=$(cat /proc/partitions | awk {'if ($1 == "'${major}'" && $2 == "'${minor}'") print $4 '})
+  deviceroot="/dev/${device}"
+  rootfsPARTUUID="$(blkid -s PARTUUID -o value ${deviceroot})"
+  device="/dev/${device/%2/1}"
+  sed -i "s/@@PARTUUID@@/${rootfsPARTUUID}/" /extlinux/extlinux.conf
+  echo "A new U-Boot version needs to be flashed onto ${device}."
+  echo "Do you want to do this now? [y|N]"
+  read -r shouldwe
+  if [[ $shouldwe =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    dd if=/boot/u-boot.kpart of=${device}
+    sync
+  else
+    echo "You can do this later by running:"
+    echo "# dd if=/boot/u-boot.kpart of=${device}"
+  fi
+}
+
+create_extlinuxconf() {
+  if [ ! -f /extlinux/extlinux.conf ]
+  then
+    if [ ! -d /extlinux ]
+    then
+      echo "Creating /extlinux directory"
+      mkdir /extlinux
+    fi
+    echo "Creating /extlinux/extlinux.conf file"
+    echo -e "TIMEOUT 50 \n\nMENU TITLE Nyan-big boot options\n\nLABEL nyan-big1\n	MENU LABEL ../boot/zImage nyan-big1\n	LINUX ../boot/zImage\n	FDTDIR ../boot/dtbs\n	APPEND console=tty0 noinitrd rw rootwait root=PARTUUID=@@PARTUUID@@" > /extlinux/extlinux.conf
+  else
+    echo "Existing extlinux.conf found at /extlinux/extlinux.conf"
+  fi
+}
+
+pre_install() {
+  create_extlinuxconf
+}
+
+pre_upgrade() {
+  create_extlinuxconf
+}
+
+post_install() {
+  flash_uboot
+}
+
+post_upgrade() {
+  flash_uboot
+}
