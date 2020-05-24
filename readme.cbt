@@ -2,13 +2,15 @@
 # looks like this padding and the other fix othe the above patch are already in v2020.01
 # v2020.01 version somehow did not work, so lets try to exactly rebuild the reey version:
 # u-boot v2018.11, u-boot.patch from reey - works :)
-# add lpae-and-spectre-mitigation.diff and it works with 4gb :)
-# to be retried: why it did not work with v2020.01? will it maybe work with v2020.04?
+# add lpae-and-spectre-mitigation.patch and it works with 4gb :)
+# to be retried: why it did not work with v2020.01? TODO: will it maybe work with v2020.04?
 #
 # from: https://archlinuxarm.org/forum/viewtopic.php?f=49&t=12185&start=90#p60232
 # in u-boot I would recommend to execute "setenv stdin cros-ec-keyb" and "saveenv" so we no
 # longer get the inputs from the serial console. Otherwise autoboot would later on not work
 # since it is always interrupted by serial.
+#
+# TODO: maybe set this as default in the sources already
 #
 # interesting too maybe: https://archlinuxarm.org/forum/viewtopic.php?f=49&t=12185&start=100#p60273
 #
@@ -16,8 +18,14 @@
 # CPU1: Spectre v2: firmware did not set auxiliary control register IBE bit, system vulnerable
 
 # u-boot: u-boot-mainline-cb
+# somehow it did not work with a v2020.01 version - TODO: to be double checked
+git checkout v2018.11
 #export ARCH=arm
-patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/chainloading-and-spectre-mitigation.diff
+patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/lpae-and-spectre-mitigation.patch
+patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/extend-spi-deactivate-delay.patch
+# not needed as we use or own its file later - but here for reference
+#patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/nyan-big-its-fix-for-reference.patch
+
 make nyan-big_defconfig
 make u-boot.bin u-boot.dtb
 
