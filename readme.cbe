@@ -3,8 +3,10 @@
 # CPU1: Spectre v2: firmware did not set auxiliary control register IBE bit, system vulnerable
 
 # u-boot: u-boot-mainline-cb
+# the version it was built last with
+git checkout v2020.04
 #export ARCH=arm
-patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/spectre-mitigation.diff
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/sprectre-mitigation.patch
 make snow_config
 make
 
