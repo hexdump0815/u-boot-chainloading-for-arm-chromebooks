@@ -1,11 +1,15 @@
 # u-boot: u-boot-mainline-cb
+# the version it was built last with
+git checkout v2020.04
 #export ARCH=arm
-patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading.diff
-patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors.diff
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading.patch
+# the rockchip chromebooks seem to have a broken primary gpt table by design
+# the backup table is ok - this patch suppresses warning about the corrupt primary one
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors.patch
 make chromebook_jerry_defconfig
 make
 
-mkimage -f /compile/doc/u-boot-mainline-cb/misc.cbr/chromebook_mighty.its /compile/result/u-boot-mainline-cb/cbr/uboot.img.cbr
+mkimage -f /compile/doc/u-boot-mainline-cb/misc.cbr/chromebook_jerry.its /compile/result/u-boot-mainline-cb/cbr/uboot.img.cbr
 
 cd /compile/result/u-boot-mainline-cb/cbr
 echo 'Dummy configuration' >  /tmp/config
