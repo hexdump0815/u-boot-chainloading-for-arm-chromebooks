@@ -1,0 +1,13 @@
+diff --git a/include/configs/tegra-common-post.h b/include/configs/tegra-common-post.h
+index e54428ba43..ea9d5feb51 100644
+--- a/include/configs/tegra-common-post.h
++++ b/include/configs/tegra-common-post.h
+@@ -64,7 +64,7 @@
+ #endif
+ 
+ #define TEGRA_DEVICE_SETTINGS \
+-	"stdin=serial" STDIN_KBD_KBC STDIN_KBD_USB STDOUT_CROS_EC "\0" \
++	"stdin=cros-ec-keyb" "\0" \
+ 	"stdout=serial" STDOUT_LCD STDOUT_VIDEO "\0" \
+ 	"stderr=serial" STDOUT_LCD STDOUT_VIDEO "\0" \
+ 	""
