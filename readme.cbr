@@ -1,6 +1,6 @@
 # u-boot: u-boot-mainline-cb
-# the version it was built last with
-git checkout v2020.04
+# v2020.04 did not work - so lets try a version which once worked for cbr ... TODO: bisect :)
+git checkout v2017.09
 #export ARCH=arm
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading.patch
 # the rockchip chromebooks seem to have a broken primary gpt table by design
@@ -9,6 +9,7 @@ patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors.patch
 make chromebook_jerry_defconfig
 make
 
+# ignore the warnings during the following command
 mkimage -f /compile/doc/u-boot-mainline-cb/misc.cbr/chromebook_jerry.its /compile/result/u-boot-mainline-cb/cbr/uboot.img.cbr
 
 cd /compile/result/u-boot-mainline-cb/cbr
