@@ -6,8 +6,10 @@ patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading-v2021.01.patch
 # the backup table is ok - this patch suppresses warning about the corrupt primary one
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors-v2021.01.patch
 make chromebook_speedy_defconfig
-# alternative for jaq and mighty
+# alternative for jaq, mighty and jerry: medion s2013 & s2015 and potentially many others - see below
 # make chromebook_jerry_defconfig
+# alternative for minnie: asus chromebook flip c100pa
+# make chromebook_minnie_defconfig
 make
 
 # ignore the warnings during the following command
@@ -18,3 +20,30 @@ echo 'Dummy configuration' >  /tmp/config
 echo 'Dummy bootloader' >  /tmp/dummy-bootloader 
 env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbr --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbr
 rm -f /tmp/config /tmp/dummy-bootloader
+
+
+# a list of chromebooks potentially supported - from: https://www.chromium.org/chromium-os/tpm_firmware_update?tmpl=/system/app/templates/print/&showPrintDialog=1
+veyron-jaq - Haier Chromebook 11
+veyron-jaq - Medion Akoya S2013
+veyron-jaq - True IDC Chromebook 11
+veyron-jaq - Xolo Chromebook
+veyron-jerry - CTL J2 / J4 Chromebook for Education
+veyron-jerry - eduGear Chromebook K Series
+veyron-jerry - Epik 11.6" Chromebook ELB1101
+veyron-jerry - HiSense Chromebook 11
+veyron-jerry - Mecer Chromebook
+veyron-jerry - NComputing Chromebook CX100
+veyron-jerry - Poin2 Chromebook 11
+veyron-jerry - Positivo Chromebook CH1190
+veyron-jerry - VideoNet Chromebook BL10
+veyron-mighty - Chromebook PCM-116E
+veyron-mighty - eduGear Chromebook M Series
+veyron-mighty - Haier Chromebook 11e
+veyron-mighty - Lumos Education Chromebook
+veyron-mighty - MEDION Chromebook S2015
+veyron-mighty - Nexian Chromebook 11.6-inch
+veyron-mighty - Prowise 11.6" Entry Line Chromebook
+veyron-mighty - Sector 5 E1 Rugged Chromebook
+veyron-mighty - Viglen Chromebook 11
+veyron-minnie - ASUS Chromebook Flip C100PA
+veyron-speedy - ASUS Chromebook C201PA
