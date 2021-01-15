@@ -1,0 +1,72 @@
+diff --git a/configs/chromebit_mickey_defconfig b/configs/chromebit_mickey_defconfig
+index 2a308eeaeb..556cc95b82 100644
+--- a/configs/chromebit_mickey_defconfig
++++ b/configs/chromebit_mickey_defconfig
+@@ -1,7 +1,7 @@
+ CONFIG_ARM=y
+ # CONFIG_SPL_USE_ARCH_MEMCPY is not set
+ CONFIG_ARCH_ROCKCHIP=y
+-CONFIG_SYS_TEXT_BASE=0x00100000
++CONFIG_SYS_TEXT_BASE=0x02000100
+ CONFIG_NR_DRAM_BANKS=1
+ CONFIG_SYS_SPI_U_BOOT_OFFS=0x20000
+ CONFIG_SPL_TEXT_BASE=0xff704000
+@@ -98,3 +98,4 @@ CONFIG_DISPLAY_ROCKCHIP_HDMI=y
+ CONFIG_SPL_TINY_MEMSET=y
+ CONFIG_CMD_DHRYSTONE=y
+ CONFIG_ERRNO_STR=y
++# CONFIG_EFI_LOADER is not set
+diff --git a/configs/chromebook_jerry_defconfig b/configs/chromebook_jerry_defconfig
+index dada557952..be06e64909 100644
+--- a/configs/chromebook_jerry_defconfig
++++ b/configs/chromebook_jerry_defconfig
+@@ -1,7 +1,7 @@
+ CONFIG_ARM=y
+ # CONFIG_SPL_USE_ARCH_MEMCPY is not set
+ CONFIG_ARCH_ROCKCHIP=y
+-CONFIG_SYS_TEXT_BASE=0x00100000
++CONFIG_SYS_TEXT_BASE=0x02000100
+ CONFIG_NR_DRAM_BANKS=1
+ CONFIG_SYS_SPI_U_BOOT_OFFS=0x20000
+ CONFIG_SPL_TEXT_BASE=0xff704000
+@@ -106,3 +106,4 @@ CONFIG_DISPLAY_ROCKCHIP_HDMI=y
+ CONFIG_SPL_TINY_MEMSET=y
+ CONFIG_CMD_DHRYSTONE=y
+ CONFIG_ERRNO_STR=y
++# CONFIG_EFI_LOADER is not set
+diff --git a/configs/chromebook_minnie_defconfig b/configs/chromebook_minnie_defconfig
+index 985ca94770..8884d2d3da 100644
+--- a/configs/chromebook_minnie_defconfig
++++ b/configs/chromebook_minnie_defconfig
+@@ -1,7 +1,7 @@
+ CONFIG_ARM=y
+ # CONFIG_SPL_USE_ARCH_MEMCPY is not set
+ CONFIG_ARCH_ROCKCHIP=y
+-CONFIG_SYS_TEXT_BASE=0x00100000
++CONFIG_SYS_TEXT_BASE=0x02000100
+ CONFIG_NR_DRAM_BANKS=1
+ CONFIG_SYS_SPI_U_BOOT_OFFS=0x20000
+ CONFIG_SPL_TEXT_BASE=0xff704000
+@@ -105,3 +105,4 @@ CONFIG_CONSOLE_SCROLL_LINES=10
+ CONFIG_SPL_TINY_MEMSET=y
+ CONFIG_CMD_DHRYSTONE=y
+ CONFIG_ERRNO_STR=y
++# CONFIG_EFI_LOADER is not set
+diff --git a/configs/chromebook_speedy_defconfig b/configs/chromebook_speedy_defconfig
+index e3d4c30739..b81eeca775 100644
+--- a/configs/chromebook_speedy_defconfig
++++ b/configs/chromebook_speedy_defconfig
+@@ -1,7 +1,7 @@
+ CONFIG_ARM=y
+ # CONFIG_SPL_USE_ARCH_MEMCPY is not set
+ CONFIG_ARCH_ROCKCHIP=y
+-CONFIG_SYS_TEXT_BASE=0x00100000
++CONFIG_SYS_TEXT_BASE=0x02000100
+ CONFIG_NR_DRAM_BANKS=1
+ CONFIG_SYS_SPI_U_BOOT_OFFS=0x20000
+ CONFIG_SPL_TEXT_BASE=0xff704000
+@@ -102,3 +102,4 @@ CONFIG_DISPLAY_ROCKCHIP_HDMI=y
+ CONFIG_SPL_TINY_MEMSET=y
+ CONFIG_CMD_DHRYSTONE=y
+ CONFIG_ERRNO_STR=y
++# CONFIG_EFI_LOADER is not set

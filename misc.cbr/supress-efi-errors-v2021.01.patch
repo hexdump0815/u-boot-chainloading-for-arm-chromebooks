@@ -1,0 +1,103 @@
+diff --git a/disk/part_efi.c b/disk/part_efi.c
+index 60b1c1d761..3003e096ea 100644
+--- a/disk/part_efi.c
++++ b/disk/part_efi.c
+@@ -95,10 +95,10 @@ static int validate_gpt_header(gpt_header *gpt_h, lbaint_t lba,
+ 
+ 	/* Check the GPT header signature */
+ 	if (le64_to_cpu(gpt_h->signature) != GPT_HEADER_SIGNATURE_UBOOT) {
+-		printf("%s signature is wrong: 0x%llX != 0x%llX\n",
++/*		printf("%s signature is wrong: 0x%llX != 0x%llX\n",
+ 		       "GUID Partition Table Header",
+ 		       le64_to_cpu(gpt_h->signature),
+-		       GPT_HEADER_SIGNATURE_UBOOT);
++		       GPT_HEADER_SIGNATURE_UBOOT); */
+ 		return -1;
+ 	}
+ 
+@@ -682,8 +682,8 @@ int gpt_verify_headers(struct blk_desc *dev_desc, gpt_header *gpt_head,
+ 	if (is_gpt_valid(dev_desc,
+ 			 GPT_PRIMARY_PARTITION_TABLE_LBA,
+ 			 gpt_head, gpt_pte) != 1) {
+-		printf("%s: *** ERROR: Invalid GPT ***\n",
+-		       __func__);
++/*		printf("%s: *** ERROR: Invalid GPT ***\n",
++		       __func__); */
+ 		return -1;
+ 	}
+ 
+@@ -968,7 +968,7 @@ static int is_gpt_valid(struct blk_desc *dev_desc, u64 lba,
+ 	/* Read and allocate Partition Table Entries */
+ 	*pgpt_pte = alloc_read_gpt_entries(dev_desc, pgpt_head);
+ 	if (*pgpt_pte == NULL) {
+-		printf("GPT: Failed to allocate memory for PTE\n");
++		/* printf("GPT: Failed to allocate memory for PTE\n"); */
+ 		return 0;
+ 	}
+ 
+@@ -1008,9 +1008,9 @@ static int find_valid_gpt(struct blk_desc *dev_desc, gpt_header *gpt_head,
+ 			       __func__);
+ 			return 0;
+ 		}
+-		if (r != 2)
++/*		if (r != 2)
+ 			printf("%s: ***        Using Backup GPT ***\n",
+-			       __func__);
++			       __func__); */
+ 	}
+ 	return 1;
+ }
+diff --git a/fs/ext4/ext4_common.c b/fs/ext4/ext4_common.c
+index c52cc400e1..e64ff6c4cf 100644
+--- a/fs/ext4/ext4_common.c
++++ b/fs/ext4/ext4_common.c
+@@ -2415,7 +2415,7 @@ int ext4fs_mount(unsigned part_length)
+ 
+ 	return 1;
+ fail:
+-	printf("Failed to mount ext2 filesystem...\n");
++/*	printf("Failed to mount ext2 filesystem...\n"); */
+ fail_noerr:
+ 	free(data);
+ 	ext4fs_root = NULL;
+diff --git a/fs/fs.c b/fs/fs.c
+index 7a4020607a..a7bb481915 100644
+--- a/fs/fs.c
++++ b/fs/fs.c
+@@ -36,7 +36,7 @@ static int fs_type = FS_TYPE_ANY;
+ static inline int fs_probe_unsupported(struct blk_desc *fs_dev_desc,
+ 				      struct disk_partition *fs_partition)
+ {
+-	log_err("** Unrecognized filesystem type **\n");
++/*	log_err("** Unrecognized filesystem type **\n"); */
+ 	return -1;
+ }
+ 
+diff --git a/fs/fs_internal.c b/fs/fs_internal.c
+index bfc35c996c..35d75518d3 100644
+--- a/fs/fs_internal.c
++++ b/fs/fs_internal.c
+@@ -29,8 +29,8 @@ int fs_devread(struct blk_desc *blk, struct disk_partition *partition,
+ 	/* Check partition boundaries */
+ 	if ((sector + ((byte_offset + byte_len - 1) >> log2blksz))
+ 	    >= partition->size) {
+-		log_err("%s read outside partition " LBAFU "\n", __func__,
+-			sector);
++/*		log_err("%s read outside partition " LBAFU "\n", __func__,
++			sector); */
+ 		return 0;
+ 	}
+ 
+diff --git a/lib/efi_loader/efi_disk.c b/lib/efi_loader/efi_disk.c
+index 7bd1ccec45..62663f45f8 100644
+--- a/lib/efi_loader/efi_disk.c
++++ b/lib/efi_loader/efi_disk.c
+@@ -531,7 +531,7 @@ efi_status_t efi_disk_register(void)
+ 		const char *if_typename = blk_get_if_type_name(desc->if_type);
+ 
+ 		/* Add block device for the full device */
+-		log_info("Scanning disk %s...\n", dev->name);
++/*		log_info("Scanning disk %s...\n", dev->name); */
+ 		ret = efi_disk_add_dev(NULL, NULL, if_typename,
+ 					desc, desc->devnum, 0, 0, &disk);
+ 		if (ret == EFI_NOT_READY) {
