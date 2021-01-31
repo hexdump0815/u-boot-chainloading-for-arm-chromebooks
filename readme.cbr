@@ -1,4 +1,6 @@
-# u-boot: u-boot-mainline-cb
+# dir: /compile/doc/u-boot-mainline-cb/u-boot-mainline-cb
+
+# speedy works with v2021.01, but for instance jerry does not, others are untested
 git checkout v2021.01
 #export ARCH=arm
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading-v2021.01.patch
@@ -10,6 +12,19 @@ make chromebook_speedy_defconfig
 # make chromebook_jerry_defconfig
 # alternative for minnie: asus chromebook flip c100pa
 # make chromebook_minnie_defconfig
+# alternative for mickey: asus chromebit
+# make chromebit_mickey_defconfig
+make
+
+# this version worked for jaq and mighty using the jerry config, but speedy did not work, others are untested
+# v2020.04/v2021.01 did not work - so lets try a version which once worked for cbr ... TODO: bisect :)
+git checkout v2017.09
+#export ARCH=arm
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/chainloading.patch
+# the rockchip chromebooks seem to have a broken primary gpt table by design
+# the backup table is ok - this patch suppresses warning about the corrupt primary one
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbr/supress-efi-errors.patch
+make chromebook_jerry_defconfig
 make
 
 # ignore the warnings during the following command
