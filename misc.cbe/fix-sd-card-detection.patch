@@ -1,0 +1,27 @@
+adjusted according to the kernel timing in arch/arm/boot/dts/exynos5250-snow-common.dtsi
+
+        samsung,dw-mshc-ciu-div = <3>;
+        samsung,dw-mshc-sdr-timing = <2 3>;
+        samsung,dw-mshc-ddr-timing = <1 2>;
+
+resulting in 2 3 3 for sdr timing + div 3
+
+some other values i experimented with i'll leave in commented out here ...
+
+diff --git a/arch/arm/dts/exynos5250-snow.dts b/arch/arm/dts/exynos5250-snow.dts
+index e41f2d3041..67a2ec34d2 100644
+--- a/arch/arm/dts/exynos5250-snow.dts
++++ b/arch/arm/dts/exynos5250-snow.dts
+@@ -312,8 +312,11 @@
+ 
+ 	mmc@12220000 {
+ 		samsung,bus-width = <4>;
+-		samsung,timing = <1 2 3>;
++		samsung,timing = <2 3 3>;
+ 		samsung,removable = <1>;
++//		no-1-8-v;
++//		cap-sd-highspeed;
++//		card-detect-delay = <500>;
+ 	};
+ 
+ 	mmc@12230000 {

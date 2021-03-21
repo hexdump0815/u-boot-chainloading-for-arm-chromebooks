@@ -2,12 +2,22 @@
 # looks like the sprectre mitigation does not work with chainloaded u-boot (not low level enough any more?)
 # CPU1: Spectre v2: firmware did not set auxiliary control register IBE bit, system vulnerable
 
-# u-boot: u-boot-mainline-cb
-# the last version this uboot has been successfully built with
-git checkout v2020.04
+# dir names: /compile/doc/u-boot-mainline-cb and /compile/source/u-boot-mainline-cb
+#
+# info for future bisecting:
+# looks like i had my last successful running snow u-boot built with v2018.11 but
+# somehow named it v2020.04 ... so v2018.11 is working and v2020.04 hangs at
+# "loading kernel" ... took me quite a while to discover this mixup
+# while trying to get v2020.04+ (wrongly assuming that i had v2020.04 already
+# running) i discovered the next breakage: after v2020.10 u-boot does not print
+# anything to the screen anymore - just a black screen and backlight is getting
+# off as well - v2020.10 is still printing something, v2021.01 and v2021.04-rc4
+# is not printing anything anymore
+git checkout v2018.11
 #export ARCH=arm
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/sprectre-mitigation.patch
-make snow_config
+patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/fix-sd-card-detection.patch
+make snow_defconfig
 make
 
 # 0x43E00000 for snow - 0x23E00000 for peach-pi
