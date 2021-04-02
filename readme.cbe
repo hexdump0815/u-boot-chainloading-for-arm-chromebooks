@@ -15,16 +15,62 @@
 # is not printing anything anymore
 git checkout v2018.11
 #export ARCH=arm
+# this does not work with chainloading, so it could be omitted most probably
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/sprectre-mitigation.patch
 patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/fix-sd-card-detection.patch
+
+# snow
 make snow_defconfig
 make
 
+# spring (untested)
+make snow_defconfig
+make
+
+# peach pit
+make peach-pit_defconfig
+make
+
+# peach pi (untested)
+make peach-pi_defconfig
+make
+
+# snow
 # 0x43E00000 for snow - 0x23E00000 for peach-pi
-mkimage -A arm -O linux -T kernel -C none -e 0x43E00000 -a 0x43E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe
+mkimage -A arm -O linux -T kernel -C none -e 0x43E00000 -a 0x43E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe-snow
 
 cd /compile/result/u-boot-mainline-cb/cbe
 echo 'Dummy configuration' >  /tmp/config
-echo 'Dummy bootloader' >  /tmp/dummy-bootloader 
-env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe-snow --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe-snow
+rm -f /tmp/config /tmp/dummy-bootloader
+
+# spring (untested)
+# 0x43E00000 for snow - 0x23E00000 for peach-pi
+mkimage -A arm -O linux -T kernel -C none -e 0x43E00000 -a 0x43E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe-spring
+
+cd /compile/result/u-boot-mainline-cb/cbe
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe-spring --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe-spring
+rm -f /tmp/config /tmp/dummy-bootloader
+
+# peach-pit
+# 0x43E00000 for snow - 0x23E00000 for peach-pi
+mkimage -A arm -O linux -T kernel -C none -e 0x23E00000 -a 0x23E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe-peach-pit
+
+cd /compile/result/u-boot-mainline-cb/cbe
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe-peach-pit --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe-peach-pit
+rm -f /tmp/config /tmp/dummy-bootloader
+
+# peach-pi (untested)
+# 0x43E00000 for snow - 0x23E00000 for peach-pi
+mkimage -A arm -O linux -T kernel -C none -e 0x23E00000 -a 0x23E00000 -d u-boot-dtb.bin /compile/result/u-boot-mainline-cb/cbe/uboot.img.cbe-peach-pi
+
+cd /compile/result/u-boot-mainline-cb/cbe
+echo 'Dummy configuration' >  /tmp/config
+echo 'Dummy bootloader' >  /tmp/dummy-bootloader
+env LD_LIBRARY_PATH=/compile/doc/u-boot-mainline-cb/cb-tools /compile/doc/u-boot-mainline-cb/cb-tools/vbutil_kernel --pack uboot.kpart.cbe-peach-pi --keyblock /compile/doc/u-boot-mainline-cb/cb-tools/kernel.keyblock --signprivate /compile/doc/u-boot-mainline-cb/cb-tools/kernel_data_key.vbprivk --version 1 --arch arm --config /tmp/config --bootloader /tmp/dummy-bootloader --vmlinuz uboot.img.cbe-peach-pi
 rm -f /tmp/config /tmp/dummy-bootloader
