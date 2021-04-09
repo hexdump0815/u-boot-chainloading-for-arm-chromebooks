@@ -15,8 +15,9 @@
 # is not printing anything anymore
 #
 # there seem to be problems booting some snow chromebooks (a rev5 at least) with
-# v2018.11, so that i had to go back furter: v2017.09 is working well on this one
-# too and others as well
+# v2018.11 (did not detect any mmc properly and tried netboot automatically), so
+# that i had to go back furter: v2017.09 is working well on this one too and
+# others as well
 #git checkout v2018.11
 git checkout v2017.09
 #export ARCH=arm
