@@ -13,11 +13,18 @@
 # anything to the screen anymore - just a black screen and backlight is getting
 # off as well - v2020.10 is still printing something, v2021.01 and v2021.04-rc4
 # is not printing anything anymore
-git checkout v2018.11
+#
+# there seem to be problems booting some snow chromebooks (a rev5 at least) with
+# v2018.11, so that i had to go back furter: v2017.09 is working well on this one
+# too and others as well
+#git checkout v2018.11
+git checkout v2017.09
 #export ARCH=arm
 # this does not work with chainloading, so it could be omitted most probably
-patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/sprectre-mitigation.patch
-patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/fix-sd-card-detection.patch
+#patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/sprectre-mitigation.patch
+# this patch was for v2018.11 only - it seems like it applies well to v2017.09
+# too so maybe it makes sense there as well? ...
+#patch -p1 < /compile/doc/u-boot-mainline-cb/misc.cbe/fix-sd-card-detection.patch
 
 # snow
 make snow_defconfig
