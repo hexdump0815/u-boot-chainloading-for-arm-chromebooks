@@ -32,7 +32,7 @@ make snow_defconfig
 make
 
 # spring (untested)
-make snow_defconfig
+make spring_defconfig
 make
 
 # peach pit
