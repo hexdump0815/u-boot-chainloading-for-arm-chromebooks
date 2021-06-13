@@ -27,6 +27,11 @@ patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/fix-stdin.patch
 # not needed as we use or own its file later - but here for reference
 #patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/nyan-big-its-fix-for-reference.patch
 
+# the following worked for the 2gb ram model with the lower res 1366x768 display
+# it looks a bit like the lpae options should not be used on this model maybe
+git checkout v2021.07-rc4
+patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/fix-stdin.patch
+
 make nyan-big_defconfig
 make u-boot.bin u-boot.dtb
 
