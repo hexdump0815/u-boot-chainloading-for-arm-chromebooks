@@ -29,8 +29,12 @@ patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/fix-stdin.patch
 
 # the following worked for the 2gb ram model with the lower res 1366x768 display
 # it looks a bit like the lpae options should not be used on this model maybe
-git checkout v2021.07-rc4
+# required: apt-get install swig
+git checkout v2021.10
 patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/fix-stdin.patch
+# if building for the 2g nyan big this patch reduces screen flickr on boot - the
+# display still does not work ... for nyan blaze this patch should not be used
+patch -p1 < ../../doc/u-boot-mainline-cb/misc.cbt/avoid-screen-flickr-on-2g-big.patch
 
 make nyan-big_defconfig
 make u-boot.bin u-boot.dtb
